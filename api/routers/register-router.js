@@ -4,16 +4,18 @@ const bcrypt = require('bcryptjs')
 
 
 router.post('/', async (req, res, next) =>{
-    try{
-        const { username, password } = req.body
-        const hash = bcrypt.hashSync(password, 8)
-        const newUser = {username, password: hash}
-        const user = await User.add(newUser)
+    // try{
+    //     const { username, password } = req.body
+    //     const hash = bcrypt.hashSync(password, 8)
+    //     const newUser = {username, password: hash}
+    //     const user = await User.add(newUser)
 
-        res.status(201).json(user)
-    } catch (err){
-        next(err)
-    }
+    //     res.status(201).json(user)
+    // } catch (err){
+    //     next(err)
+    // }
+    res.json('register api')
+    next()
 })
 
 
