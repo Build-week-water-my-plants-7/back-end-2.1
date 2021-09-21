@@ -2,6 +2,7 @@ const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
 const db = require('./data/db-config')
+const loginRouter = require('./routers/login-router')
 
 function getAllUsers() { return db('users') }
 
@@ -21,6 +22,7 @@ server.use(helmet())
 server.use(cors())
 
 server.use('/api/register', registerRouter)
+server.use('api/login', loginRouter)
 
 server.get('/api/users', async (req, res) => {
   res.json(await getAllUsers())
@@ -28,6 +30,18 @@ server.get('/api/users', async (req, res) => {
 
 server.post('/api/users', async (req, res) => {
   res.status(201).json(await insertUser(req.body))
+})
+
+server.get('/api', async (req, res) => {
+  res.json({ message: 'Water My Plants API' })
+})
+
+server.use((err, req, res, next) => { //eslint-disable-line
+  res.status( err.status || 500 ).json({
+      errorStatus: err.status,
+      message: err.message,
+      sageAdvice: 'its a long way down to the final err message'
+  })
 })
 
 module.exports = server
