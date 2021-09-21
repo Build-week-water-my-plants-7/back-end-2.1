@@ -1,9 +1,10 @@
 const router = require('express').Router()
+const { registerVerification } = require('../middlewares/register-middleware')
 const User = require('../models/register-model')
 const bcrypt = require('bcryptjs')
 
 
-router.post('/', async (req, res, next) =>{
+router.post('/', registerVerification, async (req, res, next) =>{
 
     try{
         const { username, password } = req.body
