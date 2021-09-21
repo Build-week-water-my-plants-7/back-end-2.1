@@ -2,11 +2,31 @@ const router = require('express').Router()
 const User = require('../models/register-model')
 const bcrypt = require('bcryptjs')
 
+const jwt = require('jsonwebtoken')
+const { JWT_SECRET } = require('../secrets/')
+
+function tokenBuilder(user) {
+  const payload = {
+    subject: user.id,
+    username: user.username,
+  }
+  const options = {
+    expiresIn: '1d'
+  }
+  const token = jwt.sign(
+    payload,
+    JWT_SECRET,
+    options,
+  )
+  return token
+}
+
+
 router.post('/login', async (req, res, next) => {
     const { username, password } = req.body
     try {
         const existingUser = await User.findBy({ username })
-        if (user && bcrypt.compareSync(password, existingUser.password)) {
+        if (existingUser && bcrypt.compareSync(password, existingUser.password)) {
             const token = tokenBuilder(existingUser)
             res.status(200).json({
                 message: `welcome, Plant Master ${existingUser.username}`,
@@ -22,5 +42,7 @@ router.post('/login', async (req, res, next) => {
         next(err)
     }
 })
+
+
 
 module.exports = router
