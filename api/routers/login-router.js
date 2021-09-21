@@ -29,6 +29,7 @@ router.post('/', async (req, res, next) => {
         if (existingUser && bcrypt.compareSync(password, existingUser.password)) {
             const token = tokenBuilder(existingUser)
             res.status(200).json({
+                user_id: existingUser.user_id,
                 message: `welcome, Plant Guy ${existingUser.username}`,
                 token
             })
