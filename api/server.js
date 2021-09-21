@@ -3,6 +3,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 const db = require('./data/db-config')
 const loginRouter = require('./routers/login-router')
+const registerRouter = require('./routers/register-router')
 
 function getAllUsers() { return db('users') }
 
@@ -14,15 +15,13 @@ async function insertUser(user) {
   return newUserObject // { user_id: 7, username: 'foo', password: 'xxxxxxx' }
 }
 
-const registerRouter = require('./routers/register-router')
-
 const server = express()
 server.use(express.json())
 server.use(helmet())
 server.use(cors())
 
 server.use('/api/register', registerRouter)
-server.use('api/login', loginRouter)
+server.use('/api/login', loginRouter)
 
 server.get('/api/users', async (req, res) => {
   res.json(await getAllUsers())

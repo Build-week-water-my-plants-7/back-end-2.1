@@ -22,10 +22,10 @@ function tokenBuilder(user) {
 }
 
 
-router.post('/login', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     const { username, password } = req.body
     try {
-        const existingUser = await User.findBy({ username })
+        const [existingUser] = await User.findBy({ username })
         if (existingUser && bcrypt.compareSync(password, existingUser.password)) {
             const token = tokenBuilder(existingUser)
             res.status(200).json({
