@@ -22,7 +22,7 @@ server.use(helmet())
 server.use(cors())
 
 server.use('/api/register', registerRouter)
-server.use('api/login', loginRouter)
+server.use('/api/login', loginRouter)
 
 server.get('/api/users', async (req, res) => {
   res.json(await getAllUsers())
