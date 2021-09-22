@@ -19,4 +19,37 @@ router.get('/', restricted, async (req, res, next) => {
     }
 })
 
+router.get('/user/:id', async (req, res, next) => {
+    console.log(req.params.id)
+    try {
+        const plants = await Plants.findByUserId(req.params.id)
+        if (!plants) {
+            next({
+                status: 404,
+                message: 'No plants found under that user_id'
+            })
+        } else {
+            res.status(200).json(plants)
+        }
+    } catch (err) {
+        next(err)
+    } 
+})
+
+// router.put('/user/:id', async (req, res, next) => {
+//     try {
+//         Plants.
+//     } catch (err) {
+//         next(err)
+//     } 
+// })
+
+// router.delete('/user/:id', async (req, res, next) => {
+//     try {
+//         Plants.
+//     } catch (err) {
+//         next(err)
+//     } 
+// })
+
 module.exports = router
