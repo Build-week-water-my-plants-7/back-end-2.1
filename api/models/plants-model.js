@@ -2,14 +2,16 @@ const db = require('../data/db-config')
 
 module.exports = {
     find,
-    findByUserId
+    findByUserId,
+    update,
+    remove
 }
 
 function find() {
     return db('plants')
 }
 
-async function findByUserId(user_id) {
+async function findByUserId(user_id, newValues) {
     const plants = await db('plants')
         .leftJoin('users','users.user_id','plants.user_id')
         .where('plants.user_id', user_id)
@@ -21,4 +23,14 @@ async function findByUserId(user_id) {
             'plants.image'
         )
     return plants
+}
+
+async function update(plant_id, newPlantValues) {
+    const [plantToEdit] = await db('plants').update(newPlantValues, '*').where({ plant_id })
+    return plantToEdit
+}
+
+async function remove(plant_id) {
+    const deleted = await db('plants').delete().where({ plant_id })
+    return deleted
 }
