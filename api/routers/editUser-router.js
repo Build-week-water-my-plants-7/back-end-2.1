@@ -1,17 +1,13 @@
 const router = require('express').Router()
 const EditUser = require('../models/editUser-model')
 
-router.put('/', async (req, res, next) =>{
-    try{
-        const { username, password } = req.body
-        const newUser = {username, password}
-        const user = await EditUser.update(newUser)
-
-        res.status(201).json(user)
-    } catch (err){
-        next(err)
-    }
-    next()
+router.put('/:id', async (req, res, next) =>{
+   const changes = req.body
+   EditUser.update(req.params.id, changes)
+   .then(user =>{
+       res.status(200).json(user)
+   })
+   .catch(next)
 })
 
 module.exports = router

@@ -28,8 +28,8 @@ server.use('/api/register', registerRouter)
 server.use('/api/login', loginRouter)
 server.use('/api/addplant', addPlantRouter)
 server.use('/api/plants', plantsRouter)
-server.use('/api/edituser/:id', editUserRouter)
-server.use('/api/getuser/:id', getUserRouter)
+server.use('/api/edituser', editUserRouter)
+server.use('/api/getuser', getUserRouter)
 
 server.get('/api/users', async (req, res) => {
   res.json(await getAllUsers())
