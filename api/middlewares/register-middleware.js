@@ -4,7 +4,9 @@ function registerVerification(req, res, next) {
     } else if(req.body.username.length < 3 || req.body.password.length < 3) {
         next({ status: 422, message: 'username or password are to short!'})
     }
-    else{
+    else if (!req.body.phoneNumber || typeof req.body.phoneNumber !== 'string') {
+        next({ status: 422, message: 'phoneNumber is required, and its gotta be a string'})
+    } else {
         next()
     }
 }
