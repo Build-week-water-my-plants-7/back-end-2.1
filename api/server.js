@@ -6,6 +6,8 @@ const loginRouter = require('./routers/login-router')
 const registerRouter = require('./routers/register-router')
 const addPlantRouter = require('./routers/addPlant-router')
 const plantsRouter = require('./routers/plants-router')
+const editUserRouter = require('./routers/editUser-router')
+const getUserRouter = require('./routers/getUser-router')
 
 function getAllUsers() { return db('users') }
 
@@ -26,6 +28,8 @@ server.use('/api/register', registerRouter)
 server.use('/api/login', loginRouter)
 server.use('/api/addplant', addPlantRouter)
 server.use('/api/plants', plantsRouter)
+server.use('/api/edituser/:id', editUserRouter)
+server.use('/api/getuser/:id', getUserRouter)
 
 server.get('/api/users', async (req, res) => {
   res.json(await getAllUsers())
