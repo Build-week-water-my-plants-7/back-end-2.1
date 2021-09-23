@@ -32,7 +32,7 @@ server.use('/api/edituser', editUserRouter)
 server.use('/api/getuser', getUserRouter)
 
 server.get('/api/users', async (req, res) => {
-  res.json(await getAllUsers())
+  res.status(200).json(await getAllUsers())
 })
 
 server.post('/api/users', async (req, res) => {
